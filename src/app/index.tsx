@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { router } from "expo-router";
 import {
   ActivityIndicator,
   Alert,
@@ -455,6 +456,54 @@ export default function Index() {
             </View>
           )}
         </View>
+
+        {/* ── Page Navigation Demo ── */}
+        <View style={styles.section}>
+          <Text style={styles.sectionHeader}>Page Navigation</Text>
+          <Text style={styles.sectionSubtitle}>
+            Test Expo Router's file-based navigation
+          </Text>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.navCard,
+              pressed && styles.navCardPressed,
+            ]}
+            onPress={() => router.push("/details")}
+          >
+            <View style={styles.navCardContent}>
+              <Text style={styles.navCardIcon}>📄</Text>
+              <View style={styles.navCardTextContainer}>
+                <Text style={styles.navCardTitle}>Open Details Page</Text>
+                <Text style={styles.navCardDesc}>
+                  Go to <Text style={styles.navCardCode}>src/app/details.tsx</Text>
+                </Text>
+              </View>
+              <Text style={styles.navCardArrow}>→</Text>
+            </View>
+          </Pressable>
+        </View>
+        <View style={styles.section} >
+          <Pressable
+            style={({ pressed }) => [
+              styles.navCard,
+              pressed && styles.navCardPressed,
+            ]}
+            onPress={() => router.push("/login")}
+          >
+            <View style={styles.navCardContent}>
+              <Text style={styles.navCardIcon}>🔒</Text>
+              <View style={styles.navCardTextContainer}>
+                <Text style={styles.navCardTitle}>Open Login Page</Text>
+                <Text style={styles.navCardDesc}>
+                  Go to <Text style={styles.navCardCode}>src/app/login.tsx</Text>
+                </Text>
+              </View>
+              <Text style={styles.navCardArrow}>→</Text>
+            </View>
+          </Pressable>
+          <Text>This is a simple login page.</Text>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -697,5 +746,56 @@ const styles = StyleSheet.create({
     color: "#4B5563",
     fontWeight: "600",
     fontSize: 14,
+  },
+
+  // ── Navigation Card ──
+  navCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  navCardPressed: {
+    backgroundColor: "#F3F4F6",
+    borderColor: "#4F46E5",
+    transform: [{ scale: 0.98 }],
+  },
+  navCardContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  navCardIcon: {
+    fontSize: 26,
+    marginRight: 12,
+  },
+  navCardTextContainer: {
+    flex: 1,
+  },
+  navCardTitle: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#111827",
+    marginBottom: 2,
+  },
+  navCardDesc: {
+    fontSize: 12,
+    color: "#6B7280",
+  },
+  navCardCode: {
+    fontFamily: Platform.select({ ios: "Courier", android: "monospace", default: "monospace" }),
+    color: "#4F46E5",
+    fontWeight: "600",
+  },
+  navCardArrow: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#4F46E5",
+    marginLeft: 8,
   },
 });
