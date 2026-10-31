@@ -64,8 +64,11 @@ export default function LoginScreen() {
   }, [timerActive, timer]);
 
   // Calls Android Google Play Services Phone Number Hint API directly
-  const triggerNativePhoneHint = async () => {
+  const triggerNativePhoneHint = async (isManual = false) => {
     if (Platform.OS !== "android") {
+      if (isManual) {
+        Alert.alert("Notice", "Google Play Services Phone Hint is only available on Android devices.");
+      }
       return;
     }
 
@@ -87,6 +90,11 @@ export default function LoginScreen() {
         setPhoneNumber(clean);
         // Automatically dispatch OTP immediately with 0 typing!
         executeSendOtp(clean);
+      } else if (isManual && result.error) {
+        Alert.alert(
+          "Notice",
+          "Automatic SIM detection requires an Android APK / Development build (it does not run in Expo Go). Please enter your number below."
+        );
       }
     } catch (error) {
       console.log("Phone hint dismissed or error:", error);
@@ -230,7 +238,7 @@ export default function LoginScreen() {
                 {Platform.OS === "android" && (
                   <Pressable
                     style={styles.detectBtn}
-                    onPress={triggerNativePhoneHint}
+                    onPress={() => triggerNativePhoneHint(true)}
                     disabled={detectingPhone}
                   >
                     {detectingPhone ? (

@@ -28,9 +28,9 @@ export default function DetailsScreen() {
               styles.backButton,
               pressed && styles.buttonPressed,
             ]}
-            onPress={() => router.back()}
+            onPress={() => router.push("/")}
           >
-            <Text style={styles.backButtonText}>← Go Back Home</Text>
+            <Text style={styles.backButtonText}>← Switch to Uploader Tab</Text>
           </Pressable>
         </View>
       </View>
